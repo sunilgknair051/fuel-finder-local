@@ -42,8 +42,11 @@ def _text(value: Any) -> str:
 def normalize_station(raw: Any) -> dict[str, Any] | None:
     if not isinstance(raw, dict):
         return None
+    distance_value = raw.get("dist")
+    if isinstance(distance_value, bool) or not isinstance(distance_value, (str, int, float)):
+        return None
     try:
-        distance = float(raw.get("dist"))
+        distance = float(distance_value)
     except (TypeError, ValueError):
         return None
     if not math.isfinite(distance) or distance < 0:
@@ -77,7 +80,7 @@ class TankerkoenigClient:
         longitude: float,
         radius_km: float,
     ) -> list[dict[str, Any]]:
-        params = {
+        params: dict[str, str | float] = {
             "lat": latitude,
             "lng": longitude,
             "rad": radius_km,
