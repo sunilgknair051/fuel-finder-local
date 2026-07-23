@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>FuelFinder Local</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#search-form">Skip to search</a>
+  <header class="site-header">
+    <div class="shell">
+      <p class="eyebrow">Private by design · Germany</p>
+      <h1>FuelFinder <span>Local</span></h1>
+      <p class="intro">Compare nearby E5, E10, and Diesel prices without accounts, tracking, cookies, or online geocoding.</p>
+      <div class="privacy-note" role="note">
+        Your postcode is resolved on this computer. Only coordinates and radius are sent by the local server to Tankerkönig when you search.
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="search-panel" aria-labelledby="search-heading">
+      <div class="section-heading">
+        <div>
+          <p class="step">Search</p>
+          <h2 id="search-heading">Find nearby fuel</h2>
+        </div>
+        <p>All fields stay in temporary memory only.</p>
+      </div>
+
+      <form id="search-form" novalidate>
+        <div class="form-grid">
+          <div class="field postcode-field">
+            <label for="postal-code">German postal code</label>
+            <input id="postal-code" name="postal_code" inputmode="numeric" maxlength="5"
+                   autocomplete="postal-code" pattern="[0-9]{5}" placeholder="38102" required>
+            <span class="hint">Exactly five digits</span>
+          </div>
+
+          <div class="field">
+            <label for="radius">Search radius</label>
+            <select id="radius" name="radius" required></select>
+          </div>
+
+          <div class="field custom-radius" id="custom-radius-wrap" hidden>
+            <label for="custom-radius">Custom radius</label>
+            <input id="custom-radius" type="number" min="0.5" step="0.1" value="5">
+            <span class="hint" id="radius-hint">0.5–25 km</span>
+          </div>
+
+          <div class="field">
+            <label for="distance-unit">Distance unit</label>
+            <select id="distance-unit" name="distance_unit"></select>
+          </div>
+
+          <div class="field">
+            <label for="fuel">Fuel type</label>
+            <select id="fuel" name="fuel"></select>
+          </div>
+
+          <div class="field">
+            <label for="currency">Display currency</label>
+            <select id="currency" name="currency"></select>
+          </div>
+
+          <div class="field">
+            <label for="sort">Sort results</label>
+            <select id="sort" name="sort">
+              <option value="price">Lowest selected-fuel price</option>
+              <option value="distance">Shortest distance</option>
+              <option value="name">Station name</option>
+            </select>
+          </div>
+
+          <div class="field checkbox-field">
+            <input id="open-only" name="open_only" type="checkbox">
+            <label for="open-only">Open now only</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="submit">Search stations</button>
+          <button id="refresh" class="secondary" type="button" disabled>Refresh prices</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="status" class="status" aria-live="polite" role="status">Loading local options…</div>
+
+    <section id="summary-section" class="summary-card" aria-labelledby="summary-heading" hidden>
+      <div>
+        <p class="step">Cheapest match</p>
+        <h2 id="summary-heading"></h2>
+        <p id="summary-address"></p>
+      </div>
+      <div class="summary-price">
+        <strong id="summary-price"></strong>
+        <span id="summary-detail"></span>
+      </div>
+    </section>
+
+    <section id="results-section" class="results" aria-labelledby="results-heading" hidden>
+      <div class="section-heading results-heading">
+        <div>
+          <p class="step">Results</p>
+          <h2 id="results-heading">Nearby stations</h2>
+        </div>
+        <div class="retrieval">
+          <span id="source-badge" class="badge"></span>
+          <span id="retrieved-at"></span>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <caption class="visually-hidden">Fuel stations and prices per litre</caption>
+          <thead>
+            <tr>
+              <th scope="col">Station</th>
+              <th scope="col">Status</th>
+              <th scope="col">Distance</th>
+              <th scope="col">Super E5 / Super 95</th>
+              <th scope="col">Super E10</th>
+              <th scope="col">Diesel</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+      <p id="conversion-note" class="conversion-note"></p>
+    </section>
+
+    <section id="empty-state" class="empty-state" hidden>
+      <h2>No matching priced stations</h2>
+      <p>No station in this result has a valid price for the selected fuel and filters. No zero prices are shown.</p>
+    </section>
+
+    <details class="privacy-details">
+      <summary>How privacy works</summary>
+      <p>There are no accounts, cookies, analytics, advertising, tracking, persistent history, or browser storage. The raw postcode is converted to coordinates using the bundled local GeoNames-derived dataset and is not sent to Tankerkönig.</p>
+      <p>To retrieve prices, the server necessarily sends latitude, longitude, radius, and the operator's API key to Tankerkönig. The network connection also exposes the app host's IP address in the normal way. It would therefore be inaccurate to claim that absolutely no information leaves the device.</p>
+    </details>
+  </main>
+
+  <footer>
+    <div class="shell footer-grid">
+      <div>
+        <strong>FuelFinder Local</strong>
+        <p>AGPL-3.0-or-later. Independent software; no data provider endorses this application.</p>
+      </div>
+      <div class="attribution">
+        <p>Fuel-price and station data: Tankerkönig / MTS-K, CC BY 4.0.</p>
+        <p>Postal-code coordinates: GeoNames, CC BY 4.0.</p>
+      </div>
+    </div>
+    <p class="industry-notice shell">The free Tankerkönig API may not be used by mineral-oil companies, fuel-station operators, related companies, or IT service providers acting for that industry.</p>
+  </footer>
+</body>
+</html>
