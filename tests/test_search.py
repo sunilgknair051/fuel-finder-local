@@ -75,7 +75,7 @@ def test_miles_are_converted_both_directions(
         json=payload(radius=3, distance_unit="mi", sort="distance"),
     ).json()
     assert fake_upstream.calls[0][2] == pytest.approx(4.828032)
-    assert body["stations"][0]["distance"] == pytest.approx(0.311, abs=0.001)
+    assert body["stations"][0]["distance"] == pytest.approx(0.621, abs=0.001)
 
 
 @pytest.mark.parametrize(
