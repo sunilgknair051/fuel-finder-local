@@ -101,9 +101,7 @@ class TankerkoenigClient:
             LOGGER.warning("upstream request failed")
             raise UpstreamError("Fuel-price service returned invalid data")
         normalized = [
-            station
-            for item in stations
-            if (station := normalize_station(item)) is not None
+            station for item in stations if (station := normalize_station(item)) is not None
         ]
         LOGGER.info("upstream request succeeded")
         return normalized

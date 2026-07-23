@@ -123,9 +123,8 @@ async def health() -> dict[str, str]:
 @app.get("/api/meta")
 async def meta() -> dict[str, Any]:
     return {
-        "fuels": [
-            {"value": key, "label": label} for key, label in FUEL_LABELS.items()
-        ] + [{"value": "all", "label": "All fuels"}],
+        "fuels": [{"value": key, "label": label} for key, label in FUEL_LABELS.items()]
+        + [{"value": "all", "label": "All fuels"}],
         "radii": RADIUS_OPTIONS,
         "distance_units": [
             {"value": "km", "label": "Kilometres"},
@@ -278,7 +277,8 @@ async def search(payload: SearchRequest) -> dict[str, Any]:
     ]
     available_stations = stations.copy()
     stations = [
-        item for item in stations
+        item
+        for item in stations
         if _selected_value(item, payload.fuel) is not None
         and (not payload.open_only or item["is_open"] is True)
     ]

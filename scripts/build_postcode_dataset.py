@@ -18,7 +18,8 @@ def open_source(path: Path) -> TextIO:
         return path.open("r", encoding="utf-8")
     archive = zipfile.ZipFile(path)
     candidates = sorted(
-        name for name in archive.namelist()
+        name
+        for name in archive.namelist()
         if name.lower().endswith(".txt") and not name.startswith("__MACOSX")
     )
     preferred = next((name for name in candidates if Path(name).name == "DE.txt"), None)
@@ -84,9 +85,7 @@ def build(source: Path, output: Path) -> tuple[int, int]:
             "source_file": source.name,
             "source_url": "https://download.geonames.org/export/zip/",
             "license": "Creative Commons Attribution 4.0",
-            "attribution": (
-                "Contains GeoNames geographical data, available under CC BY 4.0."
-            ),
+            "attribution": ("Contains GeoNames geographical data, available under CC BY 4.0."),
             "duplicate_policy": "lexically first place name, then latitude and longitude",
         },
         "postcodes": postcodes,
