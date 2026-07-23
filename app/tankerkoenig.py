@@ -43,7 +43,7 @@ def normalize_station(raw: Any) -> dict[str, Any] | None:
     if not isinstance(raw, dict):
         return None
     distance_value = raw.get("dist")
-    if isinstance(distance_value, bool) or not isinstance(distance_value, (str, int, float)):
+    if isinstance(distance_value, bool) or not isinstance(distance_value, str | int | float):
         return None
     try:
         distance = float(distance_value)
