@@ -1,0 +1,16 @@
+{
+  "_meta": {
+    "source": "GeoNames DE postal-code dataset",
+    "source_url": "https://download.geonames.org/export/zip/",
+    "license": "Creative Commons Attribution 4.0",
+    "attribution": "Contains GeoNames geographical data, available under CC BY 4.0.",
+    "scope": "Bootstrap entry only; run scripts/build_postcode_dataset.py for the complete German dataset."
+  },
+  "postcodes": {
+    "38102": {
+      "lat": 52.2647,
+      "lng": 10.5266,
+      "place": "Braunschweig"
+    }
+  }
+}
