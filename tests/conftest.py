@@ -30,7 +30,12 @@ class FakeUpstream:
         self.calls: list[tuple[float, float, float]] = []
         self.fail = False
 
-    async def search(self, latitude: float, longitude: float, radius: float) -> list[dict[str, Any]]:
+    async def search(
+        self,
+        latitude: float,
+        longitude: float,
+        radius: float,
+    ) -> list[dict[str, Any]]:
         self.calls.append((latitude, longitude, radius))
         if self.fail:
             raise UpstreamError("Fuel-price service is temporarily unavailable")
