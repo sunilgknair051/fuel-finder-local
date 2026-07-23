@@ -1,6 +1,6 @@
 """Decimal-based display currency conversion."""
 
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import ROUND_HALF_UP, Decimal
 
 
 def convert_price(eur_price: Decimal, rate: Decimal) -> Decimal:
