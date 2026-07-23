@@ -71,7 +71,12 @@ class TankerkoenigClient:
         self.api_key = api_key
         self.timeout_seconds = timeout_seconds
 
-    async def search(self, latitude: float, longitude: float, radius_km: float) -> list[dict[str, Any]]:
+    async def search(
+        self,
+        latitude: float,
+        longitude: float,
+        radius_km: float,
+    ) -> list[dict[str, Any]]:
         params = {
             "lat": latitude,
             "lng": longitude,
@@ -95,6 +100,10 @@ class TankerkoenigClient:
         if not isinstance(stations, list):
             LOGGER.warning("upstream request failed")
             raise UpstreamError("Fuel-price service returned invalid data")
-        normalized = [station for item in stations if (station := normalize_station(item)) is not None]
+        normalized = [
+            station
+            for item in stations
+            if (station := normalize_station(item)) is not None
+        ]
         LOGGER.info("upstream request succeeded")
         return normalized
