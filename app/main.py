@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-import math
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -241,6 +240,7 @@ def _station_view(
         "brand": station["brand"],
         "address": station["address"],
         "distance": round(display_distance, 3),
+        "distance_km": round(distance_km, 3),
         "distance_unit": unit,
         "is_open": station["is_open"],
         "prices": prices,
@@ -276,6 +276,7 @@ async def search(payload: SearchRequest) -> dict[str, Any]:
         _station_view(item, payload.currency, rate, payload.distance_unit)
         for item in entry.stations
     ]
+    available_stations = stations.copy()
     stations = [
         item for item in stations
         if _selected_value(item, payload.fuel) is not None
@@ -296,6 +297,7 @@ async def search(payload: SearchRequest) -> dict[str, Any]:
     )
     return {
         "stations": stations,
+        "available_stations": available_stations,
         "cheapest": cheapest,
         "result_count": len(stations),
         "selection": {
